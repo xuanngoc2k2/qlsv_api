@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { CourseModule } from './course/course.module';
 import { ScoreModule } from './score/score.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HocphanModule } from './hocphan/hocphan.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     UserModule,
     CourseModule,
     ScoreModule,
+    HocphanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

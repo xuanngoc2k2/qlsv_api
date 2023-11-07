@@ -1,18 +1,14 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
   Param,
-  Delete,
-  UseGuards,
+  Patch,
+  Post,
   Query,
 } from '@nestjs/common';
-import { ScoreService } from './score.service';
-import { CreateScoreDto } from './dto/create-score.dto';
 import { UpdateScoreDto } from './dto/update-score.dto';
-import { query } from 'express';
+import { ScoreService } from './score.service';
 
 @Controller('score')
 export class ScoreController {
