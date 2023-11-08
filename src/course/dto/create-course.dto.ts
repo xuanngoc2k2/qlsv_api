@@ -26,7 +26,6 @@ export class CreateCourseDto {
   date: string;
 
   @IsNotEmpty()
-  @IsString()
   year: string;
 
   @IsNotEmpty()
