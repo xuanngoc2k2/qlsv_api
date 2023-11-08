@@ -9,11 +9,9 @@ export class CreateScoreDto {
   @IsNumber()
   student_id: number;
 
-  @IsNotEmpty()
   @IsNumber()
   middle: number;
 
-  @IsNotEmpty()
   @IsNumber()
   final: number;
 

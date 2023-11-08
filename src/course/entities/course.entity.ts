@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Score } from 'src/score/entities/score.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Course {
@@ -40,4 +41,7 @@ export class Course {
 
   @Column()
   isDel: number;
+
+  @OneToMany(() => Score, (score) => score.course)
+  scores: Score[];
 }

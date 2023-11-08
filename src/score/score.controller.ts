@@ -19,20 +19,25 @@ export class ScoreController {
     return this.scoreService.svGetDiem(+id);
   }
 
-  @Get('/admin')
-  adminGetDiem(@Query() query) {
-    const { student_id, class_id } = query;
-    return this.scoreService.adminGetDiem(+student_id, +class_id);
+  // @Get('/admin')
+  // adminGetDiem(@Query() query) {
+  //   const { student_id, class_id } = query;
+  //   return this.scoreService.adminGetDiem(+student_id, +class_id);
+  // }
+
+  @Get('/admin/:course_id')
+  adminGetDiemCourse(@Param('course_id') course_id: number) {
+    return this.scoreService.adminGetDiemCourse(course_id);
   }
 
   @Get('student/count/:id')
   async GetTKeDiem(@Param('id') id: number) {
     return await this.scoreService.demDiem(id);
   }
-  @Patch()
-  update(@Body() updateScoreDto: UpdateScoreDto) {
-    return this.scoreService.update(updateScoreDto);
-  }
+  // @Patch()
+  // update(@Body() updateScoreDto: UpdateScoreDto) {
+  //   return this.scoreService.update(updateScoreDto);
+  // }
 
   @Post('/admin')
   uploadCSV(@Body() updateScoreDto: UpdateScoreDto[]) {
