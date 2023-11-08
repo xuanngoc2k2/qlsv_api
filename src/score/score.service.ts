@@ -9,7 +9,7 @@ export class ScoreService {
   constructor(
     @InjectRepository(Score)
     private readonly scoreRepo: Repository<Score>,
-  ) {}
+  ) { }
 
   async svGetDiem(id: number) {
     return await this.scoreRepo.find({
@@ -17,6 +17,41 @@ export class ScoreService {
         student_id: id,
       },
     });
+  }
+  convertToLetterGrade(score) {
+    if (score >= 9) {
+      return 'A';
+    } else if (score >= 8) {
+      return 'B';
+    } else if (score >= 7) {
+      return 'C';
+    } else {
+      return 'D';
+    }
+  }
+
+  async demDiem(id: number) {
+    const scores = this.scoreRepo.find({
+      select: ['total'],
+      where: {
+        student_id: id
+      }
+    })
+    const scoreValues = (await scores).map(score => score.total);
+
+    const letterGrades = scoreValues.map(score => this.convertToLetterGrade(score));
+    const count = {
+      'A': 0,
+      'B': 0,
+      'C': 0,
+      'D': 0
+    };
+    for (const grade of letterGrades) {
+      if (count.hasOwnProperty(grade)) {
+        count[grade]++;
+      }
+    }
+    return count;
   }
 
   async adminGetDiem(student_id?: number, class_id?: number) {

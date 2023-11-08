@@ -23,7 +23,6 @@ export class CreateUserDto {
 }
 
 export class LoginDto {
-  @IsEmail()
   @IsNotEmpty()
   email: string;
 

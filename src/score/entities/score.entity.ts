@@ -11,11 +11,14 @@ export class Score {
   @Column()
   student_id: number;
 
-  @Column()
+  @Column('double')
   middle: number;
 
-  @Column()
+  @Column('double')
   final: number;
+
+  @Column('double')
+  total: number;
 
   @Column()
   updateAt: Date;

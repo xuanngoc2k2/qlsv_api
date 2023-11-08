@@ -10,17 +10,21 @@ export class CourseService {
   constructor(
     @InjectRepository(Course)
     private readonly courseRepo: Repository<Course>,
-  ) {}
+  ) { }
 
   async create(createCourseDto: CreateCourseDto) {
     return await this.courseRepo.save(createCourseDto);
   }
 
+
+  async getall() {
+    return await this.courseRepo.find();
+  }
   async findAll(search: string) {
     return await this.courseRepo.findBy({ name: ILike(`%${search}%`) });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Course> {
     return await this.courseRepo.findOne({ where: { id } });
   }
 

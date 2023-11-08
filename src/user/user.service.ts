@@ -9,18 +9,17 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
-  ) {}
+  ) { }
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
-
     const user = await this.userRepo.findOne({
       where: {
-        email,
-        password,
+        email: email,
+        password: password,
       },
     });
-
+    console.log(user)
     if (!user) throw new UnauthorizedException();
     delete user.password;
     return user;

@@ -12,7 +12,7 @@ import { ScoreService } from './score.service';
 
 @Controller('score')
 export class ScoreController {
-  constructor(private readonly scoreService: ScoreService) {}
+  constructor(private readonly scoreService: ScoreService) { }
 
   @Get('/student/:id')
   svGetDiem(@Param() id: string) {
@@ -25,6 +25,10 @@ export class ScoreController {
     return this.scoreService.adminGetDiem(+student_id, +class_id);
   }
 
+  @Get('student/count/:id')
+  async GetTKeDiem(@Param('id') id: number) {
+    return await this.scoreService.demDiem(id);
+  }
   @Patch()
   update(@Body() updateScoreDto: UpdateScoreDto) {
     return this.scoreService.update(updateScoreDto);
