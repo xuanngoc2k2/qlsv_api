@@ -9,7 +9,7 @@ export class Course {
   name: string;
 
   @Column()
-  gv_id: string;
+  gv: string;
 
   @Column()
   so_tc: string;
@@ -37,4 +37,7 @@ export class Course {
 
   @Column()
   desc: string;
+
+  @Column()
+  isDel: number;
 }

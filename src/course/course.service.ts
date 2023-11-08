@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -18,7 +18,11 @@ export class CourseService {
 
 
   async getall() {
-    return await this.courseRepo.find();
+    return await this.courseRepo.find({
+      where: {
+        isDel: 0
+      }
+    });
   }
   async findAll(search: string) {
     return await this.courseRepo.findBy({ name: ILike(`%${search}%`) });
@@ -33,6 +37,27 @@ export class CourseService {
   }
 
   async remove(id: number) {
-    return await this.courseRepo.delete(id);
+    try {
+      const hp = await this.courseRepo.findOne({
+        where: {
+          id: id
+        }
+      });
+
+      if (hp) {
+        hp.isDel = 1;
+        const updatedHp = await this.courseRepo.update(id, hp);
+        if (updatedHp) {
+          return updatedHp;
+        } else {
+          throw new Error("Update failed");
+        }
+      } else {
+        throw new Error("Course not found");
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
+
 }

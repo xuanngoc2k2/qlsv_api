@@ -7,7 +7,7 @@ export class CreateCourseDto {
 
   @IsNotEmpty()
   @MaxLength(50)
-  gv_id: string;
+  gv: string;
 
   @IsNotEmpty()
   @IsNumber()
@@ -41,7 +41,6 @@ export class CreateCourseDto {
   @IsString()
   address: string;
 
-  @IsNotEmpty()
   @IsString()
   desc: string;
 }
