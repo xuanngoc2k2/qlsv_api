@@ -11,13 +11,13 @@ export class Score {
   // @Column()
   // student_id: number;
 
-  @Column('double')
+  @Column('double', { nullable: true })
   middle: number;
 
-  @Column('double')
+  @Column('double', { nullable: true })
   final: number;
 
-  @Column('double')
+  @Column('double', { nullable: true })
   total: number;
 
   @Column()

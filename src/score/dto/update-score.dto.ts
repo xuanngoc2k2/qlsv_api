@@ -6,11 +6,11 @@ export class UpdateScoreDto {
     course_id?: number
 
     user_id?: number
-    @IsNumber()
-    middle: number;
+    // @IsNumber()
+    middle?: number;
 
-    @IsNumber()
-    final: number;
+    // @IsNumber()
+    final?: number;
 
     @IsString()
     email: string;
