@@ -31,6 +31,17 @@ export class UserService {
     });
   }
 
+  async getAll() {
+    return await this.userRepo.find()
+  }
+
+  async getbyName(student_name: string) {
+    return await this.userRepo
+      .createQueryBuilder('User')
+      .where('User.lastName LIKE :studentName', { studentName: `%${student_name}%` })
+      .getMany();
+  }
+
   async patchSv(createUserDto: CreateUserDto) {
     const existingUser = await this.userRepo.findOne({
       where: {
