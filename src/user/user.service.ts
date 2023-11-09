@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LoginDto, CreateUserDto } from './dto/create-user.dto';
@@ -26,11 +26,17 @@ export class UserService {
 
   async createSv(createUserDto: CreateUserDto) {
     return await this.userRepo.save({
-      ...createUserDto,
-      role: 2,
+      ...createUserDto
     });
   }
 
+  async getSvbyMsv(msv: string) {
+    const sv = await this.userRepo
+      .createQueryBuilder('User')
+      .where('User.email = :masv', { masv: msv })
+      .getOne()
+    return sv == null
+  }
   async getAll() {
     return await this.userRepo.find()
   }
@@ -54,5 +60,9 @@ export class UserService {
     } else {
       return await this.userRepo.save(createUserDto);
     }
+  }
+
+  async deleteSv(id: number) {
+    return await this.userRepo.delete(id);
   }
 }

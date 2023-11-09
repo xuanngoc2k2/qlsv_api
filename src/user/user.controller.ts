@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { LoginDto, CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
@@ -14,6 +14,10 @@ export class UserController {
   @Get('/:student_name')
   async getSVbyName(@Param('student_name') student_name: string) {
     return await this.userService.getbyName(student_name);
+  }
+  @Get('/masv/:msv')
+  async getSVbyMsv(@Param('msv') msv: string) {
+    return await this.userService.getSvbyMsv(msv);
   }
 
   // @Get()
@@ -34,5 +38,10 @@ export class UserController {
   @Patch('/:msv')
   patchSv(@Body() createUserDto: CreateUserDto) {
     return this.userService.patchSv(createUserDto);
+  }
+
+  @Delete('/:id')
+  deleteSv(@Param('id') id: number) {
+    return this.userService.deleteSv(id);
   }
 }
