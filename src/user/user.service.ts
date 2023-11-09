@@ -19,7 +19,6 @@ export class UserService {
         password: password,
       },
     });
-    console.log(user)
     if (!user) throw new UnauthorizedException();
     delete user.password;
     return user;
@@ -30,5 +29,19 @@ export class UserService {
       ...createUserDto,
       role: 2,
     });
+  }
+
+  async patchSv(createUserDto: CreateUserDto) {
+    const existingUser = await this.userRepo.findOne({
+      where: {
+        email: createUserDto.email,
+      },
+    });
+
+    if (existingUser) {
+      return await this.userRepo.update(existingUser.id, createUserDto);
+    } else {
+      return await this.userRepo.save(createUserDto);
+    }
   }
 }

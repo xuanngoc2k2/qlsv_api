@@ -15,10 +15,10 @@ export class User {
   @Column({ nullable: false, default: 2 })
   role: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   email: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, default: "123" })
   password: string;
 
   @Column({ nullable: true })

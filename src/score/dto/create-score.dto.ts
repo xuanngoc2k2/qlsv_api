@@ -15,6 +15,9 @@ export class CreateScoreDto {
   @IsNumber()
   final: number;
 
+  @IsNumber()
+  user_id: number;
+
   @IsNotEmpty()
   @IsNumber()
   updateAt: Date;

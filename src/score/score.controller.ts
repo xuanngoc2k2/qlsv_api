@@ -30,6 +30,11 @@ export class ScoreController {
     return this.scoreService.adminGetDiemCourse(course_id);
   }
 
+  @Get('/admin/:course_id/:student_name')
+  adminGetDiemCourseSV(@Param('course_id') course_id: number, @Param('student_name') student_name: string) {
+    return this.scoreService.adminGetDiemCourseSV(course_id, student_name);
+  }
+
   @Get('student/count/:id')
   async GetTKeDiem(@Param('id') id: number) {
     return await this.scoreService.demDiem(id);
@@ -42,5 +47,10 @@ export class ScoreController {
   @Post('/admin')
   uploadCSV(@Body() updateScoreDto: UpdateScoreDto[]) {
     return this.scoreService.uploadCSV(updateScoreDto);
+  }
+
+  @Post('/course/:id')
+  updateDiemSv(@Param('id') id: number, @Body() UpdateScoreDto: UpdateScoreDto) {
+    return this.scoreService.updateDiemSV(id, UpdateScoreDto);
   }
 }
