@@ -21,10 +21,10 @@ export class CourseController {
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
   }
-  @Get()
-  getall() {
-    return this.courseService.getall();
-  }
+  // @Get()
+  // getall() {
+  //   return this.courseService.getall();
+  // }
   @Get()
   findAll(@Query() { search }) {
     return this.courseService.findAll(search);

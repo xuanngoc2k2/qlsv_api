@@ -39,7 +39,7 @@ export class Course {
   @Column()
   desc: string;
 
-  @Column()
+  @Column({ nullable: true, default: 0 })
   isDel: number;
 
   @OneToMany(() => Score, (score) => score.course)

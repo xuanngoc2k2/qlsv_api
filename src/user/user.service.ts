@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { LoginDto, CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
@@ -37,14 +37,31 @@ export class UserService {
       .getOne()
     return sv == null
   }
-  async getAll() {
-    return await this.userRepo.find()
-  }
+  // async getAll() {
+  //   return await this.userRepo.find()
+  // }
 
-  async getbyName(student_name: string) {
+  // async getbyName(student_name: string) {
+  //   return await this.userRepo
+  //     .createQueryBuilder('User')
+  //     .where('User.lastName LIKE :studentName', { studentName: `%${student_name}%` })
+  //     .getMany();
+  // }
+
+  async getAll(search: string) {
     return await this.userRepo
       .createQueryBuilder('User')
-      .where('User.lastName LIKE :studentName', { studentName: `%${student_name}%` })
+      .where('User.role = :id', { id: 2 })
+      .andWhere(
+        new Brackets((qb) => {
+          qb.where('User.lastName LIKE :studentName', {
+            studentName: `%${search}%`,
+          })
+          // .orWhere('User.email LIKE :studentName', {
+          //   studentName: `%${search}%`,
+          // });
+        }),
+      )
       .getMany();
   }
 

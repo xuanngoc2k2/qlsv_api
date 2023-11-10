@@ -28,14 +28,24 @@ export class ScoreService {
 
 
   convertToLetterGrade(score) {
-    if (score >= 9) {
+    if (score >= 9.5) {
+      return 'A+';
+    } else if (score >= 8.5) {
       return 'A';
     } else if (score >= 8) {
-      return 'B';
+      return 'B+';
     } else if (score >= 7) {
+      return 'B';
+    } else if (score >= 6) {
+      return 'C+';
+    } else if (score >= 5.5) {
       return 'C';
-    } else {
+    } else if (score >= 5) {
+      return 'D+';
+    } else if (score >= 4) {
       return 'D';
+    } else {
+      return 'F';
     }
   }
 
@@ -51,10 +61,15 @@ export class ScoreService {
 
     const letterGrades = scoreValues.map(score => this.convertToLetterGrade(score));
     const count = {
+      'A+': 0,
       'A': 0,
+      'B+': 0,
       'B': 0,
+      'C+': 0,
       'C': 0,
-      'D': 0
+      'D+': 0,
+      'D': 0,
+      'F': 0
     };
     for (const grade of letterGrades) {
       if (count.hasOwnProperty(grade)) {
@@ -91,6 +106,36 @@ export class ScoreService {
       .where('Score.course.id = :courseId and User.lastName LIKE :studentName', { courseId: id, studentName: `%${student_name}%` })
       .select(['Score', 'User.firstName', 'User.lastName', 'User.class', 'User.email'])
       .getMany();
+  }
+
+  async adminCountDiemSv(id: number) {
+    const scores = await this.scoreRepo
+      .createQueryBuilder('Score')
+      .leftJoinAndSelect('Score.course', 'Course')
+      .where('Score.course.id = :courseId', { courseId: id })
+      .select(['Score.total'])
+      .getMany();
+    // return scores;
+    const scoreValues = scores.map(score => score.total);
+
+    const letterGrades = scoreValues.map(score => this.convertToLetterGrade(score));
+    const count = {
+      'A+': 0,
+      'A': 0,
+      'B+': 0,
+      'B': 0,
+      'C+': 0,
+      'C': 0,
+      'D+': 0,
+      'D': 0,
+      'F': 0
+    };
+    for (const grade of letterGrades) {
+      if (count.hasOwnProperty(grade)) {
+        count[grade]++;
+      }
+    }
+    return count;
   }
 
 

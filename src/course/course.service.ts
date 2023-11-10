@@ -25,7 +25,7 @@ export class CourseService {
     });
   }
   async findAll(search: string) {
-    return await this.courseRepo.findBy({ name: ILike(`%${search}%`) });
+    return await this.courseRepo.findBy({ name: ILike(`%${search}%`,), isDel: 0 });
   }
 
   async findOne(id: number): Promise<Course> {

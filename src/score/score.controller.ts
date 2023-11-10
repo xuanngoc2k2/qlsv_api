@@ -35,7 +35,7 @@ export class ScoreController {
     return this.scoreService.adminGetDiemCourseSV(course_id, student_name);
   }
 
-  @Get('student/count/:id')
+  @Get('/student/count/:id')
   async GetTKeDiem(@Param('id') id: number) {
     return await this.scoreService.demDiem(id);
   }
@@ -52,5 +52,11 @@ export class ScoreController {
   @Post('/course/:id')
   updateDiemSv(@Param('id') id: number, @Body() UpdateScoreDto: UpdateScoreDto) {
     return this.scoreService.updateDiemSV(id, UpdateScoreDto);
+  }
+
+  @Get('/count/:id')
+  async CountDiem(@Param('id') id: number): Promise<Object> {
+    const data = await this.scoreService.adminCountDiemSv(id);
+    return data;
   }
 }
