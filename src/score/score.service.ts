@@ -284,7 +284,7 @@ export class ScoreService {
       .createQueryBuilder('Score')
       .leftJoinAndSelect('Score.user', 'User')
       .leftJoinAndSelect('Score.course', 'Course')
-      .where('Score.user_id = :id and Course.hocKi = :ki', { id, ki })
+      .where('Score.user_id = :id and Course.isDel = 0 and Course.hocKi = :ki', { id, ki })
       .getMany();
     // let userInfo = {};
     const data = scores.map((element) => {
