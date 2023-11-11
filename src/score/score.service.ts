@@ -45,7 +45,7 @@ export class ScoreService {
       console.log(user);
       userInfo = user;
       return {
-        courseId: course.id,
+        // courseId: course.id,
         name: course.name,
         soTc: course.so_tc,
         ki: course.hocKi,
@@ -144,59 +144,44 @@ export class ScoreService {
   }
 
   async adminCountDiemSv(id: number) {
-    const scores = await this.scoreRepo
-      .createQueryBuilder('Score')
-      .leftJoinAndSelect('Score.course', 'Course')
-      .where('Score.course.id = :courseId', { courseId: id })
-      .select(['Score.total'])
-      .getMany();
-    // return scores;
-    const scoreValues = scores.map(score => score.total);
+    try {
+      const scores = await this.scoreRepo
+        .createQueryBuilder('Score')
+        .leftJoinAndSelect('Score.course', 'Course')
+        .leftJoinAndSelect('Score.user', 'User')
+        .where('Score.user.id = :userId', { userId: id })
+        .select(['Score.total', 'Course.so_tc'])
+        .getMany();
 
-    const letterGrades = scoreValues.map(score => this.convertToLetterGrade(score));
-    const count = {
-      'A+': 0,
-      'A': 0,
-      'B+': 0,
-      'B': 0,
-      'C+': 0,
-      'C': 0,
-      'D+': 0,
-      'D': 0,
-      'F': 0
-    };
-    for (const grade of letterGrades) {
-      if (count.hasOwnProperty(grade)) {
-        count[grade]++;
+
+      const count = {
+        'A+': 0,
+        'A': 0,
+        'B+': 0,
+        'B': 0,
+        'C+': 0,
+        'C': 0,
+        'D+': 0,
+        'D': 0,
+        'F': 0
+      };
+      console.log(scores)
+      for (const score of scores) {
+        const letterGrades = this.convertToLetterGrade(score.total);
+        const stc = score.course.so_tc;
+        if (count.hasOwnProperty(letterGrades)) {
+          count[letterGrades] += Number(stc);
+        }
       }
+      console.log(count)
+      return count;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error counting grades.');
     }
-    return count;
   }
 
 
-  // async adminGetDiemCourseSV(id: number, student_name: string) {
-  //   return this.scoreRepo
-  //     .createQueryBuilder('Score')
-  //     .leftJoinAndSelect('Score.course', 'Course')
-  //     .leftJoinAndSelect('Score.user', 'User')
-  //     .where('Score.course.id = :courseId and Score.user.lastName LIKE student_name', { courseId: id, student_name })
-  //     .select(['Score', 'User.firstName', 'User.lastName', 'User.class', 'User.email'])
-  //     .getMany();
-
-  // }
-
-  // async update(updateScoreDto: UpdateScoreDto) {
-  //   const { student_id, course_id } = updateScoreDto;
-  //   const score = await this.scoreRepo.find({
-  //     where: {
-  //       student_id,
-  //       course,
-  //     },
-  //   });
-
-  //   if (score) return await this.scoreRepo.update(score[0].id, updateScoreDto);
-  //   return await this.scoreRepo.save(updateScoreDto);
-  // }
 
   async uploadCSV(updateScoresDto: UpdateScoreDto[]) {
     try {
@@ -286,16 +271,10 @@ export class ScoreService {
       .leftJoinAndSelect('Score.course', 'Course')
       .where('Score.user_id = :id and Course.isDel = 0 and Course.hocKi = :ki', { id, ki })
       .getMany();
-    // let userInfo = {};
     const data = scores.map((element) => {
       const { user, course, ...tmp } = element;
       delete tmp.id;
       delete tmp.updateAt;
-      // delete user.password;
-      // delete user.id;
-      // delete user.role;
-      // console.log(user);
-      // userInfo = user;
       return {
         courseId: course.id,
         name: course.name,
@@ -305,8 +284,30 @@ export class ScoreService {
         ...tmp,
       };
     });
-    // const user = 
     return data
-    // return scores;
+  }
+
+  async getAllhp(id: number) {
+    const scores = await this.scoreRepo
+      .createQueryBuilder('Score')
+      .leftJoinAndSelect('Score.user', 'User')
+      .leftJoinAndSelect('Score.course', 'Course')
+      .where('Score.user_id = :id and Course.isDel = 0', { id })
+      .getMany();
+    const data = scores.map((element) => {
+      const { user, course, ...tmp } = element;
+      const time = `${course.date} từ tiết ${course.from} đến tiết ${course.to}`;
+      return {
+        name: course.name,
+        gv: course.gv,
+        so_tc: course.so_tc,
+        time: time,
+        address: course.address,
+        hocki: course.hocKi,
+        year: course.year,
+        ss: course.totalSV
+      };
+    });
+    return data
   }
 }

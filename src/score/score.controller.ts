@@ -73,4 +73,11 @@ export class ScoreController {
     console.log(data)
     return data;
   }
+
+  @Get('/sinhvien/:id')
+  getAllhpsv(@Param('id') id: number) {
+    const data = this.scoreService.getAllhp(id);
+    console.log(data)
+    return data;
+  }
 }

@@ -59,5 +59,4 @@ export class CourseService {
       throw new Error(error.message);
     }
   }
-
 }

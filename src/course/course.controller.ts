@@ -44,4 +44,9 @@ export class CourseController {
   remove(@Param('id') id: string) {
     return this.courseService.remove(+id);
   }
+
+  // @Get('sinh-vien/:id')
+  // getAllHp(@Param('id') id: number) {
+  //   return this.courseService.getallHp(id);
+  // }
 }
