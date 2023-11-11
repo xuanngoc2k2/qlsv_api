@@ -15,8 +15,8 @@ export class ScoreController {
   constructor(private readonly scoreService: ScoreService) { }
 
   @Get('/student/:id')
-  svGetDiem(@Param() id: string) {
-    return this.scoreService.svGetDiem(+id);
+  svGetDiem(@Param('id') id: number) {
+    return this.scoreService.svGetDiem(id);
   }
 
   // @Get('/admin')
@@ -57,6 +57,20 @@ export class ScoreController {
   @Get('/count/:id')
   async CountDiem(@Param('id') id: number): Promise<Object> {
     const data = await this.scoreService.adminCountDiemSv(id);
+    return data;
+  }
+
+  @Get('/ki/:id')
+  getKi(@Param('id') id: number) {
+    const data = this.scoreService.getAllkiSV(id);
+    // console.log(data)
+    return data;
+  }
+
+  @Get('/ki/:id/:kihoc')
+  getDiemKi(@Param('id') id: number, @Param('kihoc') kihoc: number) {
+    const data = this.scoreService.svGetDiemKi(id, kihoc);
+    console.log(data)
     return data;
   }
 }

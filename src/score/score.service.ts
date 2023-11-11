@@ -19,11 +19,46 @@ export class ScoreService {
   ) { }
 
   async svGetDiem(id: number) {
-    return await this.scoreRepo
-      .createQueryBuilder('score')
-      .leftJoin('score.sv', 'sv')
-      .select(['score.total'])
-      .where('sv.id = :id', { id })
+    // console.log(id);
+    // const scores = await this.scoreRepo
+    //   .createQueryBuilder('Score')
+    //   .leftJoinAndSelect('Score.course', 'Course')
+    //   .leftJoinAndSelect('Score.user', 'User')
+    //   .where('Score.user.id = :userId', { userId: id })
+    //   .select(['Score', 'Course'])
+    //   .getMany()
+    // console.log(scores);
+    const scores = await this.scoreRepo
+      .createQueryBuilder('Score')
+      .leftJoinAndSelect('Score.user', 'User')
+      .leftJoinAndSelect('Score.course', 'Course')
+      .where('Score.user_id = :id', { id })
+      .getMany();
+    let userInfo = {};
+    const data = scores.map((element) => {
+      const { user, course, ...tmp } = element;
+      delete tmp.id;
+      delete tmp.updateAt;
+      delete user.password;
+      // delete user.id;
+      delete user.role;
+      console.log(user);
+      userInfo = user;
+      return {
+        courseId: course.id,
+        name: course.name,
+        soTc: course.so_tc,
+        ki: course.hocKi,
+        nam: course.year,
+        ...tmp,
+      };
+    });
+    // const user = 
+    return {
+      userInfo,
+      data
+    }
+    // return scores;
   }
 
 
@@ -230,5 +265,48 @@ export class ScoreService {
       console.log('Gọi Update điểm chưa có');
       return this.updateDiemSV(id_course, updateScoreDto);
     }
+  }
+  async getAllkiSV(id: number) {
+    const data = await this.scoreRepo
+      .createQueryBuilder('Score')
+      .leftJoinAndSelect('Score.course', 'Course')
+      .where('Score.user.id = :userId', { userId: id })
+      .select('DISTINCT Course.hocKi', 'hocKi') // Use select for distinct
+      .getRawMany();
+
+    const kiValues = data.map((item) => item.hocKi);
+    // console.log(kiValues);
+    return kiValues;
+  }
+
+  async svGetDiemKi(id: number, ki: number) {
+    const scores = await this.scoreRepo
+      .createQueryBuilder('Score')
+      .leftJoinAndSelect('Score.user', 'User')
+      .leftJoinAndSelect('Score.course', 'Course')
+      .where('Score.user_id = :id and Course.hocKi = :ki', { id, ki })
+      .getMany();
+    // let userInfo = {};
+    const data = scores.map((element) => {
+      const { user, course, ...tmp } = element;
+      delete tmp.id;
+      delete tmp.updateAt;
+      // delete user.password;
+      // delete user.id;
+      // delete user.role;
+      // console.log(user);
+      // userInfo = user;
+      return {
+        courseId: course.id,
+        name: course.name,
+        soTc: course.so_tc,
+        ki: course.hocKi,
+        nam: course.year,
+        ...tmp,
+      };
+    });
+    // const user = 
+    return data
+    // return scores;
   }
 }
