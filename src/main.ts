@@ -26,6 +26,6 @@ async function bootstrap() {
     credentials: true, // Nếu bạn cần hỗ trợ đăng nhập từ nguồn khác
   }));
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3030);
+  await app.listen(3333);
 }
 bootstrap();
