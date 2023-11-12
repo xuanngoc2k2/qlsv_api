@@ -1,10 +1,21 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { LoginDto, CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
+import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   // @Get()
   // async getAllSv() {
@@ -31,8 +42,19 @@ export class UserController {
   // }
 
   @Post('/login')
-  async loginCredentials(@Body() loginDto: LoginDto) {
-    return await this.userService.login(loginDto);
+  async loginCredentials(@Body() loginDto: LoginDto, @Res() res: Response) {
+    const user = await this.userService.login(loginDto);
+    res.cookie('user', user);
+    return res.send(user);
+  }
+
+  @Get('/logout')
+  async logout(@Res() res: Response) {
+    res.cookie('user', '', {
+      expires: new Date(0),
+      httpOnly: true,
+    });
+    res.send(true);
   }
 
   @Post('/sinh-vien')

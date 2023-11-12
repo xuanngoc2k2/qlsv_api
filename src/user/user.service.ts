@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Brackets, Repository } from 'typeorm';
 import { LoginDto, CreateUserDto } from './dto/create-user.dto';
@@ -9,7 +13,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
-  ) { }
+  ) {}
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
@@ -26,7 +30,7 @@ export class UserService {
 
   async createSv(createUserDto: CreateUserDto) {
     return await this.userRepo.save({
-      ...createUserDto
+      ...createUserDto,
     });
   }
 
@@ -34,8 +38,8 @@ export class UserService {
     const sv = await this.userRepo
       .createQueryBuilder('User')
       .where('User.email = :masv', { masv: msv })
-      .getOne()
-    return sv == null
+      .getOne();
+    return sv == null;
   }
   // async getAll() {
   //   return await this.userRepo.find()
@@ -56,7 +60,7 @@ export class UserService {
         new Brackets((qb) => {
           qb.where('User.lastName LIKE :studentName', {
             studentName: `%${search}%`,
-          })
+          });
           // .orWhere('User.email LIKE :studentName', {
           //   studentName: `%${search}%`,
           // });
