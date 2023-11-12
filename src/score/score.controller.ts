@@ -60,6 +60,12 @@ export class ScoreController {
     return data;
   }
 
+  @Get('/gv/count/:id')
+  async gvCountDiem(@Param('id') id: number): Promise<Object> {
+    const data = await this.scoreService.adminCountDiemmh(id);
+    return data;
+  }
+
   @Get('/ki/:id')
   getKi(@Param('id') id: number) {
     const data = this.scoreService.getAllkiSV(id);

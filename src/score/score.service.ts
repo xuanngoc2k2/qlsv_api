@@ -142,7 +142,42 @@ export class ScoreService {
       .select(['Score', 'User.firstName', 'User.lastName', 'User.class', 'User.email'])
       .getMany();
   }
+  async adminCountDiemmh(id: number) {
+    try {
+      const scores = await this.scoreRepo
+        .createQueryBuilder('Score')
+        .leftJoinAndSelect('Score.course', 'Course')
+        .where('Score.course.id = :courseId', { courseId: id })
+        .select(['Score.total'])
+        .getMany();
 
+
+      const count = {
+        'A+': 0,
+        'A': 0,
+        'B+': 0,
+        'B': 0,
+        'C+': 0,
+        'C': 0,
+        'D+': 0,
+        'D': 0,
+        'F': 0
+      };
+      console.log(scores)
+      for (const score of scores) {
+        const letterGrades = this.convertToLetterGrade(score.total);
+        // const stc = score.course.so_tc;
+        if (count.hasOwnProperty(letterGrades)) {
+          count[letterGrades]++;
+        }
+      }
+      console.log(count)
+      return count;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error counting grades.');
+    }
+  }
   async adminCountDiemSv(id: number) {
     try {
       const scores = await this.scoreRepo
