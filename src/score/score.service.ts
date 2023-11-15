@@ -311,7 +311,7 @@ export class ScoreService {
       delete tmp.id;
       delete tmp.updateAt;
       return {
-        courseId: course.id,
+        // courseId: course.id,
         name: course.name,
         soTc: course.so_tc,
         ki: course.hocKi,
