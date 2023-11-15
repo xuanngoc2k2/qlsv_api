@@ -13,7 +13,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
-  ) {}
+  ) { }
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
@@ -34,12 +34,28 @@ export class UserService {
     });
   }
 
+  async updateSv(userU: CreateUserDto) {
+    const user = await this.userRepo.findOne({
+      where: {
+        email: userU.email
+      }
+    });
+
+    if (user) {
+      return await this.userRepo.update({ email: userU.email }, userU);
+    }
+    else {
+      return BadRequestException
+    }
+  }
+
   async getSvbyMsv(msv: string) {
     const sv = await this.userRepo
       .createQueryBuilder('User')
       .where('User.email = :masv', { masv: msv })
       .getOne();
-    return sv == null;
+    if (sv) return sv;
+    else return null;
   }
   // async getAll() {
   //   return await this.userRepo.find()

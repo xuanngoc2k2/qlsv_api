@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   Res,
 } from '@nestjs/common';
@@ -17,15 +18,6 @@ import { Response } from 'express';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  // @Get()
-  // async getAllSv() {
-  //   return await this.userService.getAll();
-  // }
-
-  // @Get('/:student_name')
-  // async getSVbyName(@Param('student_name') student_name: string) {
-  //   return await this.userService.getbyName(student_name);
-  // }
   @Get()
   async getAllSv(@Query() query: any) {
     return await this.userService.getAll(query.search);
@@ -36,6 +28,10 @@ export class UserController {
     return await this.userService.getSvbyMsv(msv);
   }
 
+  @Put('masv/:msv')
+  async updateSv(@Body() userU: CreateUserDto) {
+    return await this.userService.updateSv(userU);
+  }
   // @Get()
   // async getSVbyName(@Body() student_name: string) {
   //   return await this.userService.getbyName(student_name);
