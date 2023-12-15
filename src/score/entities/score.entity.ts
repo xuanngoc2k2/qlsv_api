@@ -7,10 +7,6 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 export class Score {
   @PrimaryGeneratedColumn()
   id: number;
-
-  // @Column()
-  // student_id: number;
-
   @Column('double', { nullable: true })
   middle: number;
 

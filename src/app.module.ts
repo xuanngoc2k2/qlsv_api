@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { CourseModule } from './course/course.module';
-import { ScoreModule } from './score/score.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HocphanModule } from './hocphan/hocphan.module';
+import { TaikhoanModule } from './taikhoan/taikhoan.module';
+import { SinhvienModule } from './sinhvien/sinhvien.module';
+import { LopModule } from './lop/lop.module';
+import { MonModule } from './mon/mon.module';
+import { MonnganhModule } from './monnganh/monnganh.module';
+import { NganhModule } from './nganh/nganh.module';
+import { KhoaModule } from './khoa/khoa.module';
 
 @Module({
   imports: [
@@ -15,13 +19,17 @@ import { HocphanModule } from './hocphan/hocphan.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'qlsv',
+      database: 'qldiemsvien',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    UserModule,
-    CourseModule,
-    ScoreModule,
+    NganhModule,
+    MonnganhModule,
+    MonModule,
+    LopModule,
+    KhoaModule,
+    SinhvienModule,
+    TaikhoanModule,
     HocphanModule,
   ],
   controllers: [AppController],

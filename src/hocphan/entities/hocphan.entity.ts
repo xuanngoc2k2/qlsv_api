@@ -1,13 +1,35 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Mon } from 'src/mon/entities/mon.entity';
+import { SinhvienHocphan } from 'src/sinhvienhocphan/entities/sinhvienhocphan.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Hocphan {
   @PrimaryGeneratedColumn()
-  id: number;
+  mahocphan: number;
+
+  @PrimaryColumn()
+  thutu: number;
 
   @Column({ nullable: false })
-  student_id: number;
+  nam: number;
 
   @Column({ nullable: false })
-  course_id: number;
+  hocki: number;
+
+  @Column({ nullable: false })
+  diadiemhoc: string;
+
+  @Column({ nullable: false })
+  soluong: number;
+
+  @Column({ nullable: false })
+  gvphutrach: string;
+
+  @ManyToOne(() => Mon, (mon) => mon.hocphans)
+  @JoinColumn({ name: 'mamon' })
+  mon: Mon;
+
+  @OneToMany(() => SinhvienHocphan, (svhp) => svhp.hp)
+  svhp: SinhvienHocphan[]
+
 }
