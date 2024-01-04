@@ -1,6 +1,6 @@
-import { CreateHocphanDto } from './dto/create-hocphan.dto';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { HocphanService } from './hocphan.service';
+import { CreateHocphanDto } from './dto/hocphan.dto';
 
 @Controller('hocphan')
 export class HocphanController {
@@ -9,5 +9,14 @@ export class HocphanController {
   @Get()
   async getAllHP() {
     return this.hocphanService.getAllhp();
+  }
+  @Post()
+  createHocphan(@Body() createHocphanDto: CreateHocphanDto) {
+    return this.hocphanService.createHocphan(createHocphanDto);
+  }
+
+  @Delete(':mahp/:thutu')
+  deletehp(@Param('mahp') hp: string, @Param('thutu') thutu: number) {
+    return this.hocphanService.delete(hp, thutu)
   }
 }

@@ -1,26 +1,26 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateScoreDto } from './create-score.dto';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+// import { PartialType } from '@nestjs/mapped-types';
+// import { CreateScoreDto } from './create-score.dto';
+// import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class UpdateScoreDto {
-    course_id?: number
+// export class UpdateScoreDto {
+//     course_id?: number
 
-    user_id?: number
-    // @IsNumber()
-    middle?: number;
+//     user_id?: number
+//     // @IsNumber()
+//     middle?: number;
 
-    // @IsNumber()
-    final?: number;
+//     // @IsNumber()
+//     final?: number;
 
-    @IsString()
-    email: string;
+//     @IsString()
+//     email: string;
 
-    @IsString()
-    classN: string;
+//     @IsString()
+//     classN: string;
 
-    @IsString()
-    firstName: string;
+//     @IsString()
+//     firstName: string;
 
-    @IsString()
-    lastName: string;
-}
+//     @IsString()
+//     lastName: string;
+// }

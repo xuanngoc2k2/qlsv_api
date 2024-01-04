@@ -19,7 +19,7 @@ import { KhoaModule } from './khoa/khoa.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'qldiemsvien',
+      database: 'qldiemsv',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

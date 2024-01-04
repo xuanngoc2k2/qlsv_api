@@ -9,5 +9,11 @@ export class MonService {
         @InjectRepository(Mon)
         private readonly monRepo: Repository<Mon>,
     ) { }
+    async findAll() {
+        return await this.monRepo.find();
+    }
 
+    async createMon(mon) {
+        return await this.monRepo.create(mon);
+    }
 }

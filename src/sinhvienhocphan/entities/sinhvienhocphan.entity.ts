@@ -8,7 +8,8 @@ export class SinhvienHocphan {
     masv: string;
 
     @PrimaryColumn()
-    mahocphan: number;
+    // mahocphan: number;
+    mahocphan: string;
 
     @PrimaryColumn()
     lanhoc: number;
@@ -25,7 +26,6 @@ export class SinhvienHocphan {
     @ManyToOne(() => SinhvienKi, (svk) => svk.svhp)
     @JoinColumn([
         { name: 'masv', referencedColumnName: 'masv' },
-        // { name: 'kithu', referencedColumnName: 'kithu' }
     ])
     svk: SinhvienKi;
 

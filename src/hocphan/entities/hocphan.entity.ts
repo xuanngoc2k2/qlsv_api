@@ -4,14 +4,25 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, Primar
 
 @Entity()
 export class Hocphan {
-  @PrimaryGeneratedColumn()
-  mahocphan: number;
+  // @PrimaryGeneratedColumn()
+  // mahocphan: number;
+  @PrimaryColumn()
+  // @Column({ nullable: false })
+  mahocphan: string;
 
+  // @PrimaryColumn()
+  // @Column({ nullable: false })
+  // mamon: number;
+
+  // @Column({ nullable: false })
   @PrimaryColumn()
   thutu: number;
 
   @Column({ nullable: false })
-  nam: number;
+  nam: string;
+
+  @Column({ nullable: false })
+  tenhp: string;
 
   @Column({ nullable: false })
   hocki: number;
@@ -24,6 +35,15 @@ export class Hocphan {
 
   @Column({ nullable: false })
   gvphutrach: string;
+
+  @Column({ nullable: false })
+  tutiet: string;
+
+  @Column({ nullable: false })
+  dentiet: string;
+
+  @Column({ nullable: false })
+  mota: string;
 
   @ManyToOne(() => Mon, (mon) => mon.hocphans)
   @JoinColumn({ name: 'mamon' })

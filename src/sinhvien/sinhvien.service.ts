@@ -75,7 +75,7 @@ export class SinhvienService {
         const ns = new Date(ngaysinh);
         this.taikhoan.save({
             masv,
-            password: masv,
+            password: ngaysinh.toString(),
         });
         console.log(createSinhvienDto);
         const student = this.sinhvienRepo.create({
@@ -85,22 +85,14 @@ export class SinhvienService {
             gioitinh,
             sdt,
             email,
-            gpa: gpa !== 0 ? null : gpa,
-            lop: { id: createSinhvienDto.lop }, // Assuming maLop is the ID of the class (Lop)
+            gpa: !gpa ? null : gpa,
+            lop: { malop: createSinhvienDto.lop },
         });
 
         return await this.sinhvienRepo.save(student);
-        // let student = this.sinhvienRepo.create({
-        //     masv,
-        //     tensv,
-        //     ngaysinh: ns,
-        //     gioitinh,
-        //     sdt,
-        //     email,
-        //     gpa,
-        // });
-        // console.log(cl);
-        // Assuming maLop is the ID of the class (Lop)
-        //   student.lop = {cl};
+    }
+    async deleteSv(masv) {
+        console.log(masv);
+        return await this.sinhvienRepo.delete(masv);
     }
 }

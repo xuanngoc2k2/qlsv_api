@@ -1,13 +1,14 @@
 import { Khoa } from "src/khoa/entities/khoa.entity";
 import { Nganh } from "src/nganh/entities/nganh.entity";
 import { Sinhvien } from "src/sinhvien/entities/sinhvien.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Lop {
     @PrimaryGeneratedColumn()
     id: number;
 
+    // @PrimaryColumn()
     @Column({ nullable: false, unique: true })
     malop: number;
 

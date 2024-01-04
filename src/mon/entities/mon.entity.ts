@@ -1,11 +1,11 @@
 import { Hocphan } from "src/hocphan/entities/hocphan.entity";
 import { Monnganh } from "src/monnganh/entities/monnganh.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Mon {
-    @PrimaryGeneratedColumn()
-    mamonhoc: number;
+    @PrimaryColumn()
+    mamonhoc: string;
 
     @Column({ nullable: false })
     tenmonhoc: string;

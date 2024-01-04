@@ -34,6 +34,6 @@ export class Sinhvien {
     svk: Sinhvien[]
 
     @ManyToOne(() => Lop, (lop) => lop.svs)
-    @JoinColumn({ name: 'malop' })
+    @JoinColumn({ name: 'malop', referencedColumnName: 'malop' })
     lop: Lop;
 }

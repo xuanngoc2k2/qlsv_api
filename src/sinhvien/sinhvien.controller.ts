@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { SinhvienService } from "./sinhvien.service";
 import { Sinhvien } from "./entities/sinhvien.entity";
 import { CreateSinhvienDto } from "./dto/sinhvien.dto";
@@ -20,5 +20,10 @@ export class SinhvienController {
     @Post()
     create(@Body() createSinhvienDto: CreateSinhvienDto) {
         return this.sinhvienService.createSv(createSinhvienDto);
+    }
+
+    @Delete(':masv')
+    deleteSv(@Param('masv') masv: string) {
+        return this.sinhvienService.deleteSv(masv);
     }
 }
